@@ -1,10 +1,14 @@
-import "./App.css";
+import './App.css'
+import Login from './components/login'
 import MapView from "./components/MapView";
 
 function App() {
+
   return (
     <>
-      <MapView />
+    <MapView />
+    <Login/>
+
     </>
   );
 }
