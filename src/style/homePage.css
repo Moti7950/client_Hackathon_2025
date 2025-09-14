@@ -1,0 +1,11 @@
+header{
+  background-color: aqua;
+  align-self: flex-start;
+  margin: 2% auto;
+}
+
+footer{
+  background-color: blanchedalmond;
+  align-self: flex-start;
+  margin-left: 30% auto;
+}

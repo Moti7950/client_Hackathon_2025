@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import '../style/homePage.css';
 
 export default function HomePage() {
   return (

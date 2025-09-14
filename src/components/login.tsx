@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import '../style/login.css';
 
 export default function Login() {
   let navigate = useNavigate();

@@ -1,0 +1,77 @@
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+  height: 95vh;
+  width: 70vw;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 10px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  background-color: #e4e3e3;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+section{
+  align-self: center;
+  margin-top: 100px;
+  border: 1px solid rgb(30, 18, 3);
+  transition: transform 1s;
+}
+
+section:hover{
+  transform: scale(1.1);
+  cursor: not-allowed;
+  border: 2px solid rgb(236, 154, 95);
+  background-color: rgb(41, 235, 245);
+}
+
+#sectionInput{
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  width: 40vw;
+  border-radius: 5px;
+}
+
+#sectionInput input{
+  height: 25px;
+  align-self: center;
+  margin-top: 7%;
+  border: 3px solid rgb(111, 238, 20);
+  border-radius: 5px;
+}
+
+#sectionInput button{
+  margin-top: 10%;
+  width: 10vw;
+  margin-left: 38%;
+}
+
+#haman{
+  height: 20vh;
+  width: 10vw;
+  border-radius: 50%;
+  align-self: flex-start;
+  margin: 10px;
+}
+
+p{
+  align-self: flex-start;
+  font-size: 24px;
+  font-weight: 600;
+}
