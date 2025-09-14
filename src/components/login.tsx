@@ -5,10 +5,12 @@ export default function Login() {
   return (
     <>
       <main>
-        <img src="אמן.png" alt="" id="haman"/>
-        <input type="text" placeholder="enter your name" />
-        <input type="text" placeholder="enter password" />
-        <button onClick={() => navigate("/homePage")}>Log in</button>
+        <img src="אמן.png" alt="" id="haman" />
+        <section id="sectionInput">
+          <input type="text" placeholder="enter your name" />
+          <input type="text" placeholder="enter password" />
+          <button onClick={() => navigate("/homePage")}>Log in</button>
+        </section>
         <p>!סודי ביותר</p>
       </main>
     </>

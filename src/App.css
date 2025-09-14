@@ -45,6 +45,42 @@ button:hover {
   border-color: #646cff;
 }
 
+section{
+  align-self: center;
+  margin-top: 100px;
+  border: 1px solid rgb(30, 18, 3);
+  transition: transform 1s;
+}
+
+section:hover{
+  transform: scale(1.1);
+  cursor: not-allowed;
+  border: 2px solid rgb(236, 154, 95);
+  background-color: rgb(41, 235, 245);
+}
+
+#sectionInput{
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  width: 40vw;
+  border-radius: 5px;
+}
+
+#sectionInput input{
+  height: 25px;
+  align-self: center;
+  margin-top: 7%;
+  border: 3px solid rgb(111, 238, 20);
+  border-radius: 5px;
+}
+
+#sectionInput button{
+  margin-top: 10%;
+  width: 10vw;
+  margin-left: 38%;
+}
+
 #haman{
   height: 20vh;
   width: 10vw;
