@@ -2,6 +2,7 @@ import "../styles/homePage.css";
 import Footer from "./footer";
 import Header from "./header";
 import MapView from "./MapView";
+import GazaZoomMap from "./gazaStrip";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
         <Header />
       </header>
       <MapView />
+      <GazaZoomMap />
       <footer>
         <Footer />
       </footer>
