@@ -1,52 +1,25 @@
-import { useRef, useState } from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
-
+// components/Login.tsx
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { handleLogin } from "../utility/fetchFunctions";
 
 export default function Login() {
-  const userNameRef = useRef(null);
-  const passwordRef = useRef(null);
-  const navigate = useNavigate(); 
+  const userNameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  
 
-
-  const verifyUser = async () => {
-    const userName = userNameRef.current.value;
-    const password = passwordRef.current.value;
-
-    const response = await fetch('http://your-api.com/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userName, password }),
-    });
-
-    const result = await response.json();
-    console.log(result)
-
-    if (result.found) {
-      alert('Welcome!');
-      navigate('/homePage'); 
-    } else {
-      alert('User not found!');
-    }
+  const onClickLogin = () => {
+    const userName = userNameRef.current?.value || "";
+    const password = passwordRef.current?.value || "";
+    handleLogin(userName, password);
   };
 
-  const handleSubmit = (e :any) => {
-    e.preventDefault();
-    verifyUser();
-  };
-
- 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <img src="אמן.png" alt="" id="haman"/>
-        <input type="text" placeholder="enter your name" ref={userNameRef} />
-        <input type="text" placeholder="enter password" ref={passwordRef} />
-         
-        <p>!סודי ביותר</p>
-        <button type="submit">Login</button>
-      </form>
-    </>
+    <div>
+      <h2>Login</h2>
+      <input type="text" placeholder="Username" ref={userNameRef} />
+      <input type="password" placeholder="Password" ref={passwordRef} />
+      <button onClick={onClickLogin}>Login</button>
+    </div>
   );
 }
