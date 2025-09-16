@@ -24,11 +24,13 @@ button {
 
 button:hover {
   border-color: #646cff;
+  background-color: #ded3d3a1;
 }
 
 section{
   align-self: center;
   margin-top: 100px;
+  background-color: rgba(160, 240, 213, 0.774);
   border: 1px solid rgb(30, 18, 3);
   transition: transform 1s;
 }
@@ -67,11 +69,12 @@ section:hover{
   width: 10vw;
   border-radius: 50%;
   align-self: flex-start;
-  margin: 10px;
+  margin: 3vh;
 }
 
 p{
   align-self: flex-start;
   font-size: 24px;
   font-weight: 600;
+  margin-top: 7vh;
 }

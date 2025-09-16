@@ -1,7 +1,8 @@
 header{
   background-color: aqua;
-  align-self: flex-start;
-  margin: 2% auto;
+  border-radius: 5px;
+  /* align-self: flex-start; */
+  /* margin: 2% auto; */
 }
 
 footer{
