@@ -2,7 +2,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
+   background: linear-gradient(135deg, #ff00cc, #333399, #0ca8b4, #ff0080);
   height: 95vh;
   width: 70vw;
   border: 1px solid black;
@@ -30,7 +30,7 @@ button:hover {
 section {
   align-self: center;
   margin-top: 100px;
-  background-color: rgba(160, 240, 213, 0.774);
+  background: linear-gradient(135deg, #6a11cb, #1f58bb, #d4af37);
   border: 1px solid rgb(30, 18, 3);
   transition: transform 1s;
 }
@@ -73,7 +73,8 @@ input::placeholder {
 
 #btnLogin {
   border-radius: 20px;
-  color: #b164ff;
+  color: #f9f7fb;
+  background-color: #368af1;
 }   
 
 #haman {
