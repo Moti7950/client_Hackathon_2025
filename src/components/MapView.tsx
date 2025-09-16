@@ -43,11 +43,7 @@ function MapView() {
             attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
           />
         )}
-        <LocationClick
-          onClick={(lat, len) => {
-            console.log(lat, len);
-          }}
-        />
+        <LocationClick onClick={() => {}} setLocations={setLocations} />
 
         {locations.map((loc) => (
           <React.Fragment key={loc.id}>
