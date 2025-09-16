@@ -3,8 +3,8 @@ import React, { useContext } from "react";
 import "../style/login.css";
 import { RoleContext } from "../contexts/role.context";
 
-const role = useContext(RoleContext);
 export default function Login() {
+  const role = useContext(RoleContext);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   let navigate = useNavigate();
