@@ -1,32 +1,70 @@
-import { useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import React, { useEffect, useState } from "react";
+import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
+import LocationClick from "./LocationClick";
+import type { location } from "../types/location";
 
 function MapView() {
-  const [locations, _setLocations] = useState(
-    // קוד זה לדוגמא
-    // במקור הוא צריך להגיע מהשרת
-    [
-      { id: 1, name: "מיקום ראשון", lat: 31.5016, lng: 34.4667 },
-      { id: 2, name: "מיקום שני", lat: 31.523, lng: 34.47 },
-      { id: 3, name: "מיקום שלישי", lat: 31.55, lng: 34.465 },
-    ]
-  );
+  const [view, setView] = useState("map");
+  const [locations, setLocations] = useState<location[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:6578/locations")
+      .then((res) => res.json())
+      .then((data) => {
+        setLocations(data);
+      })
+      .catch((err) => {
+        console.error("שגיאה בטעינת נתונים:", err);
+      });
+  }, []);
 
   return (
-    <MapContainer center={[31.5016, 34.4667]} zoom={13}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      />
+    <>
+      <button
+        id="setView"
+        onClick={() => {
+          view === "map" ? setView("satellite") : setView("map");
+        }}
+      >
+        view
+      </button>
 
-      {locations.map((loc) => (
-        <Marker key={loc.id} position={[loc.lat, loc.lng]}>
-          <Popup>{loc.name}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+      <MapContainer center={[31.4167, 34.3333]} zoom={13}>
+        {view === "map" ? (
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          />
+        ) : (
+          <TileLayer
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+          />
+        )}
+        <LocationClick
+          onClick={(lat, len) => {
+            console.log(lat, len);
+          }}
+        />
+
+        {locations.map((loc) => (
+          <React.Fragment key={loc.id}>
+            <Marker position={[loc.lat, loc.len]}>
+              <Popup>{loc.description}</Popup>
+            </Marker>
+            <Circle
+              center={[loc.lat, loc.len]}
+              radius={100}
+              pathOptions={
+                loc.type === "soldier" ? { color: "blue" } : { color: "red" }
+              }
+            />
+          </React.Fragment>
+        ))}
+      </MapContainer>
+    </>
   );
 }
 

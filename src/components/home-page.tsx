@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import MapView from "./MapView";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,8 @@ export default function HomePage() {
         <button>soldier locations</button>
         <button>Intelligence by waypoints</button>
       </header>
+      <MapView />
+
       <footer>
         <Link to={"/"}> ⏮ Log out</Link>
       </footer>
