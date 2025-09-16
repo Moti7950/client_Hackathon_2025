@@ -4,11 +4,9 @@ import RoleProvider from "./contexts/role.context";
 
 function App() {
   return (
-    <>
       <RoleProvider>
         <Login />
       </RoleProvider>
-    </>
   );
 }
 

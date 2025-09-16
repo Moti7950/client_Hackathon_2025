@@ -3,11 +3,11 @@ import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import LocationClick from "./LocationClick";
-import type { location } from "../types/location";
+import { useLocations } from "../contexts/locations.context";
 
 function MapView() {
   const [view, setView] = useState("map");
-  const [locations, setLocations] = useState<location[]>([]);
+  const { locations, setLocations } = useLocations();
 
   useEffect(() => {
     fetch("http://localhost:6578/locations")
@@ -44,7 +44,6 @@ function MapView() {
           />
         )}
         <LocationClick onClick={() => {}} setLocations={setLocations} />
-
         {locations.map((loc) => (
           <React.Fragment key={loc.id}>
             <Marker position={[loc.lat, loc.len]}>
