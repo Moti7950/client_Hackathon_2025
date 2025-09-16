@@ -1,7 +1,7 @@
-import "./App.css";
-import Login from "./components/login";
-import RoleProvider from "./contexts/role.context";
 
+import './App.css'
+import Login from './components/login'
+import GazaZoomMap from './components/gazaStrip';
 function App() {
   return (
     <>
