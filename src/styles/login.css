@@ -1,4 +1,4 @@
-main{
+main {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +16,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   margin: 10px;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   background-color: #e4e3e3;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -27,7 +27,7 @@ button:hover {
   background-color: #ded3d3a1;
 }
 
-section{
+section {
   align-self: center;
   margin-top: 100px;
   background-color: rgba(160, 240, 213, 0.774);
@@ -35,14 +35,15 @@ section{
   transition: transform 1s;
 }
 
-section:hover{
+
+section:hover {
   transform: scale(1.1);
   cursor: not-allowed;
   border: 2px solid rgb(236, 154, 95);
   background-color: rgb(41, 235, 245);
 }
 
-#sectionInput{
+#sectionInput {
   display: flex;
   flex-direction: column;
   height: 50vh;
@@ -50,7 +51,7 @@ section:hover{
   border-radius: 5px;
 }
 
-#sectionInput input{
+#sectionInput input {
   height: 25px;
   align-self: center;
   margin-top: 7%;
@@ -58,13 +59,13 @@ section:hover{
   border-radius: 5px;
 }
 
-#sectionInput button{
+#sectionInput button {
   margin-top: 10%;
   width: 10vw;
   margin-left: 38%;
 }
 
-#haman{
+#haman {
   height: 20vh;
   width: 10vw;
   border-radius: 50%;
@@ -72,9 +73,45 @@ section:hover{
   margin: 3vh;
 }
 
-p{
+p {
+  background-color: rgba(176, 249, 74, 0.872);
+  width: 12vw;
+  text-align: center;
+  border-radius: 3px;
   align-self: flex-start;
   font-size: 24px;
   font-weight: 600;
   margin-top: 7vh;
 }
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    width: 95%;
+    padding: 10px;
+  }
+
+  #sectionInput {
+    width: 90%;  
+    height: auto;
+  }
+
+  #sectionInput button {
+    width: 60%;
+    margin: 20px auto;
+  }
+
+  #haman {
+    width: 40vw;
+    height: auto;
+    margin: 20px auto;
+  }
+
+  p {
+    width: auto;
+    font-size: 18px;
+    margin: 20px auto;
+    order: -1;
+  }
+}
+

@@ -1,12 +1,12 @@
 header{
   background-color: aqua;
   border-radius: 5px;
-  /* align-self: flex-start; */
-  /* margin: 2% auto; */
 }
 
+
 footer{
-  background-color: blanchedalmond;
-  align-self: flex-start;
-  margin-left: 30% auto;
+  background-color: rgb(151, 230, 252);
+  border-radius: 5px;
+  margin-top: 1vh;
+  height: 4vh;
 }
