@@ -10,13 +10,7 @@ function LocationClick({
       const { lat, lng } = e.latlng;
       onClick(lat, lng);
 
-      fetch("https://server-hackathon-2025.onrender.com/api/locations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ lat, lng }),
-      })
+      fetch(`http://localhost:6578/locations/${lat}/${lng}`)
         .then((res) => {
           if (!res.ok) throw new Error("Failed to send location");
           return res.json();

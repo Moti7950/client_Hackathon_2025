@@ -1,38 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import LocationClick from "./LocationClick";
+import type { location } from "../types/location";
 
 function MapView() {
   const [view, setView] = useState("map");
-  const [locations, _setLocations] = useState(
-    // קוד זה לדוגמא
-    // במקור הוא צריך להגיע מהשרת
-    [
-      {
-        id: 1,
-        description: "מיקום ראשון",
-        type: "soldier",
-        lat: 31.5016,
-        lng: 34.4667,
-      },
-      {
-        id: 2,
-        description: "מיקום שני",
-        type: "terorist",
-        lat: 31.523,
-        lng: 34.48,
-      },
-      {
-        id: 3,
-        description: "מיקום שלישי",
-        type: "soldier",
-        lat: 31.55,
-        lng: 34.465,
-      },
-    ]
-  );
+  const [locations, setLocations] = useState<location[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:6578/locations")
+      .then((res) => res.json())
+      .then((data) => {
+        setLocations(data);
+      })
+      .catch((err) => {
+        console.error("שגיאה בטעינת נתונים:", err);
+      });
+  }, []);
 
   return (
     <>
@@ -45,7 +31,7 @@ function MapView() {
         view
       </button>
 
-      <MapContainer center={[31.5016, 34.4667]} zoom={13}>
+      <MapContainer center={[31.4167, 34.3333]} zoom={13}>
         {view === "map" ? (
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -58,18 +44,18 @@ function MapView() {
           />
         )}
         <LocationClick
-          onClick={(lat, lng) => {
-            console.log(lat, lng);
+          onClick={(lat, len) => {
+            console.log(lat, len);
           }}
         />
 
         {locations.map((loc) => (
           <React.Fragment key={loc.id}>
-            <Marker position={[loc.lat, loc.lng]}>
+            <Marker position={[loc.lat, loc.len]}>
               <Popup>{loc.description}</Popup>
             </Marker>
             <Circle
-              center={[loc.lat, loc.lng]}
+              center={[loc.lat, loc.len]}
               radius={100}
               pathOptions={
                 loc.type === "soldier" ? { color: "blue" } : { color: "red" }
