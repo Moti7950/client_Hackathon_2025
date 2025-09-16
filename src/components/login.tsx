@@ -43,7 +43,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="enter password"
           />
-          <button onClick={onsubmit}>Log in</button>
+          <button id="btnLogin" onClick={onsubmit}>Log in</button>
         </section>
         <p>!סודי ביותר</p>
       </main>
