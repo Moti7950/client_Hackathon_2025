@@ -1,18 +1,17 @@
-import { Link } from "react-router";
+import "../style/homePage.css";
+import Footer from "./footer";
+import Header from "./header";
 import MapView from "./MapView";
 
 export default function HomePage() {
   return (
     <>
       <header>
-        <button>Camera </button>
-        <button>soldier locations</button>
-        <button>Intelligence by waypoints</button>
+        <Header />
       </header>
       <MapView />
-
       <footer>
-        <Link to={"/"}> ⏮ Log out</Link>
+        <Footer />
       </footer>
     </>
   );
