@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router";
-import React from "react";
-import '../styles/login.css';
+import React, { useContext } from "react";
+import "../styles/login.css";
+import { RoleContext } from "../contexts/role.context";
 
 export default function Login() {
+  const role = useContext(RoleContext);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   let navigate = useNavigate();
@@ -15,6 +17,7 @@ export default function Login() {
       body: JSON.stringify({ username, password }),
     });
     const result = await data.json();
+    role?.setRole(result.role);
     console.log(result.status);
     if (result.status) {
       navigate("/homepage");

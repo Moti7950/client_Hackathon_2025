@@ -1,11 +1,13 @@
-import './App.css'
-import Login from './components/login'
+import "./App.css";
+import Login from "./components/login";
+import RoleProvider from "./contexts/role.context";
 
 function App() {
-
   return (
     <>
-    <Login/>
+      <RoleProvider>
+        <Login />
+      </RoleProvider>
     </>
   );
 }
