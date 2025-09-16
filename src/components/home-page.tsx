@@ -1,4 +1,4 @@
-import "../style/homePage.css";
+import "../styles/homePage.css";
 import Footer from "./footer";
 import Header from "./header";
 import MapView from "./MapView";
