@@ -1,4 +1,4 @@
-import { useLocations } from "../contexts/locations.context";
+import { useLocations } from "../contexts/Locations.context.tsx";
 import {
   ZeekLive,
   MarkSuspicious,
