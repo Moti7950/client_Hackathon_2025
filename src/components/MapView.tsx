@@ -32,7 +32,6 @@ function MapView() {
       >
         view
       </button>
-
       <MapContainer center={[31.4167, 34.3333]} zoom={13} style={{ height: "100%", width: "100%" }}>
         {view === "map" ? (
           <TileLayer

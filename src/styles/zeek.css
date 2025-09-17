@@ -1,0 +1,36 @@
+#adminTest {
+  position: fixed;      /* שינוי ל-fixed כדי להישאר תמיד בפינה */
+  top: 20px;            /* ריווח מהחלק העליון */
+  right: 20px;          /* ריווח מהצד הימני */
+  z-index: 1000;
+}
+
+#adminTest > button {
+  padding: 10px 18px;   /* ריווח אופקי גדול יותר */
+  background-color: #1565c0; /* צבע כחול כהה יותר */
+  color: white;
+  border: none;
+  border-radius: 0;     /* קצוות מרובעים */
+  cursor: pointer;
+  font-size: 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 2px 8px rgba(21,101,192,0.08); /* צל עדין */
+}
+
+#location-info-zeek {
+  position: fixed;
+  top: 90px;                /* מרחק גדול יותר מהחלק העליון */
+  left: 20px;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.65); /* שקיפות גבוהה יותר */
+  color: white;
+  padding: 8px 14px;        /* ריווח פנימי קטן יותר */
+  border-radius: 0;
+  font-family: "monospace";
+  font-size: 0.95em;        /* פונט קטן יותר */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  min-width: 120px;         /* רוחב מינימלי */
+  max-width: 220px;         /* רוחב מקסימלי */
+  pointer-events: none;     /* לא מפריע ללחיצה על כפתורים מתחת */
+  opacity: 0.92;            /* שקיפות */
+}

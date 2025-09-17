@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { MapContainer, CircleMarker, TileLayer, useMap } from "react-leaflet";
 import html2canvas from "html2canvas";
+import '../styles/zeek.css';
 
 type Coordinate = [number, number];
 
@@ -49,39 +50,16 @@ const DroneMap: React.FC = () => {
   return (
     <div style={{ height: "100vh", width: "100vw" }} ref={mapRef}>
       {/* לחצן צילום */}
-      <div style={{
-        position: "absolute",
-        top: "10px",
-        right: "10px",
-        zIndex: 1000,
-      }}>
-        <button
+      <div id="capture-button" >
+        <button 
           onClick={captureMap}
-          style={{
-            padding: "10px",
-            backgroundColor: "#2196F3",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
         >
           📸 צלם תמונה
         </button>
       </div>
 
       {/* מידע על מיקום הרחפן */}
-      <div style={{
-        position: "absolute",
-        top: "10px",
-        left: "10px",
-        zIndex: 1000,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        color: "white",
-        padding: "10px",
-        borderRadius: "5px",
-        fontFamily: "monospace",
-      }}>
+      <div id="location-info-zeek" > 
         <div>🚁 מיקום הרחפן:</div>
         <div>Lat: {dronePosition[0].toFixed(6)}</div>
         <div>Lng: {dronePosition[1].toFixed(6)}</div>
