@@ -1,11 +1,14 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function Footer() {
+   const nav = useNavigate();
+  const logout = () => {
+    sessionStorage.removeItem("isAuthed");
+    nav("/");
+  };
   return (
-    <>
-      <footer>
-        <Link to={"/"}> ⏮ Log out</Link>
-      </footer>
-    </>
+     <footer>
+      <button onClick={logout}>⏮ Log out</button>
+    </footer>
   );
 }
