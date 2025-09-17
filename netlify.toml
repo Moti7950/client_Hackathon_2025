@@ -9,7 +9,7 @@
   command = "npm ci && npm run build"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "22"
 
 # Headers for better security and performance
 [[headers]]
