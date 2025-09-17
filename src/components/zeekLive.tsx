@@ -11,6 +11,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import html2canvas from "html2canvas";
 import BASE_URL from "../config";
+import { useDrone } from "../contexts/Drone.context";
 
 type Coordinate = [number, number];
 
@@ -64,9 +65,8 @@ const DroneMap: React.FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   // <<< הרחפן מוצב בנ״צ שהבאת >>>
-  const [dronePosition, setDronePosition] = React.useState<Coordinate>([
-    31.328623, 34.327602,
-  ]);
+ const { dronePosition, setDronePosition } = useDrone();
+
 
   // נתונים שבאים מהשרת עבור הטווח של הרחפן
   const [nearby, setNearby] = React.useState<ServerLocation[]>([]);
@@ -136,14 +136,6 @@ const DroneMap: React.FC = () => {
       <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }}>
         <button
           onClick={captureMap}
-          style={{
-            padding: "10px",
-            backgroundColor: "#2196F3",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
         >
           📸 צלם תמונה
         </button>
@@ -154,11 +146,12 @@ const DroneMap: React.FC = () => {
         style={{
           position: "absolute",
           top: 10,
-          left: 10,
+          left: -50,
           zIndex: 1000,
           backgroundColor: "rgba(0,0,0,0.7)",
           color: "white",
           padding: "10px",
+          margin: "100px",
           borderRadius: "5px",
           fontFamily: "monospace",
           minWidth: 220,
@@ -181,11 +174,10 @@ const DroneMap: React.FC = () => {
         zoomControl={false}
         attributionControl={false}
       >
-        <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/servic
-es/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          attribution='Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
-        />
+       <TileLayer
+  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+  attribution='Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+/>
 
         {/* מרכז מפה לרחפן */}
         <CenterMap position={dronePosition} />
