@@ -12,6 +12,8 @@ import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import { useLocations } from "../contexts/Locations.context.tsx";
 import BASE_URL from "../config";
+import { moveDroneToLatLng } from "../utility/dronFunction.tsx";
+import { useDrone } from "../contexts/Drone.context.tsx";
 
 function MapClickHandler({
   onClick,
@@ -27,6 +29,7 @@ function MapClickHandler({
 function MapView() {
   const [view, setView] = useState("map");
   const { locations, setLocations } = useLocations();
+  const { setDronePosition } = useDrone();
 
   const [drawing, setDrawing] = useState(false);
   const [squareCenter, setSquareCenter] = useState<[number, number] | null>(
@@ -44,7 +47,7 @@ function MapView() {
       });
   }, []);
 
-  const squareSize = 0.005; 
+  const squareSize = 0.005;
 
   return (
     <>
@@ -108,7 +111,7 @@ function MapView() {
           <MapClickHandler
             onClick={(lat, lng) => {
               setSquareCenter([lat, lng]);
-              console.log("נקודת ציון מרכז הריבוע:", lat, lng);
+              moveDroneToLatLng(lat, lng, setDronePosition);
               setDrawing(false);
             }}
           />
