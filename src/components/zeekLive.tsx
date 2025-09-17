@@ -10,56 +10,111 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import html2canvas from "html2canvas";
-import L from "leaflet";
-import { useLocations } from "../contexts/Locations.context.tsx";
+import BASE_URL from "../config";
 
 type Coordinate = [number, number];
 
-// כמה מטרים נחשבים "בקרבת הרחפן"
-const NEARBY_RADIUS_M = 300;
+type ServerLocation = {
+  id: string | number;
+  lat: number | string;
+  lng?: number | string;  // אם ה־API שלך מחזיר lng
+  len?: number | string;  // ואם הוא מחזיר len – נתמוך גם בזה
+  description?: string;
+  type?: "soldier" | "enemy" | string;
+};
 
+// ====== הגדרות ======
+const NEARBY_RADIUS_M = 300 as const; // רדיוס "טווח הרחפן" במטרים
+
+// מרכז המפה על הרחפן
 const CenterMap: React.FC<{ position: Coordinate }> = ({ position }) => {
   const map = useMap();
-  map.setView(position, 20); // זום גבוה כדי לראות את הנקודה
+  map.setView(position, 20); // זום גבוה
   return null;
 };
+
+// המרחק בין שתי נקודות (מטרים) – בלי ספריות נוספות
+function distanceMeters(aLat: number, aLng: number, bLat: number, bLng: number) {
+  const R = 6371000; // מטר
+  const toRad = (x: number) => (x * Math.PI) / 180;
+  const dLat = toRad(bLat - aLat);
+  const dLng = toRad(bLng - aLng);
+  const lat1 = toRad(aLat);
+  const lat2 = toRad(bLat);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+// מחשב bbox סביב נקודה לפי רדיוס (בקירוב טוב)
+function bboxAround(lat: number, lng: number, radiusM: number) {
+  const latRad = (lat * Math.PI) / 180;
+  const dLat = radiusM / 111_320;                         // מעלות לרדיוס בקווי רוחב
+  const dLng = radiusM / (111_320 * Math.max(Math.cos(latRad), 1e-6)); // הגנה ליד הקטבים
+  return {
+    south: +(lat - dLat).toFixed(6),
+    west:  +(lng - dLng).toFixed(6),
+    north: +(lat + dLat).toFixed(6),
+    east:  +(lng + dLng).toFixed(6),
+  };
+}
 
 const DroneMap: React.FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  // <<< הרחפן מוצב בדיוק בנ״צ שנתת >>>
-  const [dronePosition] = React.useState<Coordinate>([31.328623, 34.327602]);
+  // <<< הרחפן מוצב בנ״צ שהבאת >>>
+  const [dronePosition, setDronePosition] = React.useState<Coordinate>([
+    31.328623, 34.327602,
+  ]);
 
-  // כל המיקומים מה־context (אותו מקור כמו ב-MapView)
-  const { locations } = useLocations();
+  // נתונים שבאים מהשרת עבור הטווח של הרחפן
+  const [nearby, setNearby] = React.useState<ServerLocation[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const abortRef = React.useRef<AbortController | null>(null);
 
-  // סינון: רק נקודות בקרבת הרחפן (במטרים)
-  const nearbyLocations = React.useMemo(() => {
-    const dLL = L.latLng(dronePosition[0], dronePosition[1]);
-    return (locations ?? [])
-      .map((loc) => {
-        const lat = Number(loc.lat);
-        const lng = Number((loc as any).lng ?? (loc as any).len); // len נתמך
-        return { ...loc, lat, lng };
-      })
-      .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng))
-      .filter((p) => L.latLng(p.lat, p.lng).distanceTo(dLL) <= NEARBY_RADIUS_M);
-  }, [locations, dronePosition]);
+  // בקשה לשרת: “תן נקודות בתוך ה-bbox סביב הרחפן”
+  const fetchNearby = React.useCallback(async (lat: number, lng: number) => {
+    const { south, west, north, east } = bboxAround(lat, lng, NEARBY_RADIUS_M);
 
-  // הנקודה הכי קרובה (אם קיימת) להדגשה ויזואלית
-  const nearest = React.useMemo(() => {
-    const dLL = L.latLng(dronePosition[0], dronePosition[1]);
-    let best: any = null;
-    let bestD = Infinity;
-    for (const p of nearbyLocations) {
-      const d = L.latLng(p.lat, p.lng).distanceTo(dLL);
-      if (d < bestD) {
-        bestD = d;
-        best = p;
-      }
+    // ביטול בקשה קודמת אם רצה
+    if (abortRef.current) abortRef.current.abort();
+    const ac = new AbortController();
+    abortRef.current = ac;
+
+    setLoading(true);
+    try {
+      // מניחים שהשרת תומך ב-/locations?bbox=s,w,n,e (כמו אצלך)
+      const url = new URL(`${BASE_URL}/locations`);
+      url.searchParams.set("bbox", `${south},${west},${north},${east}`);
+
+      const res = await fetch(url.toString(), { signal: ac.signal });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ServerLocation[] = await res.json();
+
+      // ניקוי + סינון סופי לפי מעגל (ליתר דיוק; bbox הוא ריבוע)
+      const cleaned = data
+        .map((loc) => {
+          const latNum = Number(loc.lat);
+          const lngNum = Number((loc.lng as any) ?? (loc.len as any));
+          return { ...loc, lat: latNum, lng: lngNum };
+        })
+        .filter((p) => Number.isFinite(p.lat as number) && Number.isFinite(p.lng as number))
+        .filter((p) => distanceMeters(lat, lng, p.lat as number, p.lng as number) <= NEARBY_RADIUS_M);
+
+      setNearby(cleaned);
+    } catch (e: any) {
+      if (e?.name !== "AbortError") console.error("failed to fetch nearby locations", e);
+    } finally {
+      setLoading(false);
     }
-    return best ?? null;
-  }, [nearbyLocations, dronePosition]);
+  }, []);
+
+  // טען נקודות בטווח כשנכנסים/כשמיקום הרחפן משתנה
+  React.useEffect(() => {
+    fetchNearby(dronePosition[0], dronePosition[1]);
+    return () => abortRef.current?.abort();
+  }, [dronePosition, fetchNearby]);
 
   // צילום תמונה (נשאר)
   const captureMap = async () => {
@@ -94,7 +149,7 @@ const DroneMap: React.FC = () => {
         </button>
       </div>
 
-      {/* מידע על מיקום הרחפן */}
+      {/* מיקום הרחפן + מונה מהשרת */}
       <div
         style={{
           position: "absolute",
@@ -106,11 +161,15 @@ const DroneMap: React.FC = () => {
           padding: "10px",
           borderRadius: "5px",
           fontFamily: "monospace",
+          minWidth: 220,
         }}
       >
-        <div>🚁 מיקום הרחפן:</div>
+        <div>🚁 מיקום הרחפן</div>
         <div>Lat: {dronePosition[0].toFixed(6)}</div>
         <div>Lng: {dronePosition[1].toFixed(6)}</div>
+        <div style={{ marginTop: 6 }}>
+          📍 נקודות בטווח (מהשרת): <b>{nearby.length}</b> {loading ? "…טוען" : ""}
+        </div>
       </div>
 
       <MapContainer
@@ -123,7 +182,8 @@ const DroneMap: React.FC = () => {
         attributionControl={false}
       >
         <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          url="https://server.arcgisonline.com/ArcGIS/rest/servic
+es/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           attribution='Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
         />
 
@@ -134,38 +194,38 @@ const DroneMap: React.FC = () => {
         <CircleMarker
           center={dronePosition}
           radius={8}
-          pathOptions={{ color: "#ff0000", fillColor: "#ff4444", fillOpacity: 0.9, weight: 2 }}
+          pathOptions={{
+            color: "#ff0000",
+            fillColor: "#ff4444",
+            fillOpacity: 0.9,
+            weight: 2,
+          }}
         />
 
-        {/* טבעת תחום קרבה כדי לראות מה אמור להופיע */}
+        {/* טבעת טווח הרחפן (ויזואלי) */}
         <Circle
           center={dronePosition}
           radius={NEARBY_RADIUS_M}
           pathOptions={{ color: "#2196F3", weight: 1, fillOpacity: 0.08 }}
         />
 
-        {/* מציג רק נקודות קרובות לרחפן */}
-        {nearbyLocations.map((p) => (
-          <React.Fragment key={String(p.id)}>
-            <Marker position={[p.lat, p.lng]} zIndexOffset={1000}>
-              <Popup>{p.description}</Popup>
-            </Marker>
-            <Circle
-              center={[p.lat, p.lng]}
-              radius={100}
-              pathOptions={p.type === "soldier" ? { color: "blue" } : { color: "red" }}
-            />
-          </React.Fragment>
-        ))}
-
-        {/* הדגשה של הנקודה הקרובה ביותר (אינדיקציה ברורה) */}
-        {nearest && (
-          <Circle
-            center={[nearest.lat, nearest.lng]}
-            radius={35}
-            pathOptions={{ color: "orange", weight: 2, dashArray: "6 4", fillOpacity: 0 }}
-          />
-        )}
+        {/* מציגים רק את מה שהשרת החזיר עבור הטווח */}
+        {nearby.map((p) => {
+          const lat = p.lat as number;
+          const lng = (p.lng as number) ?? (p.len as number);
+          return (
+            <React.Fragment key={String(p.id)}>
+              <Marker position={[lat, lng]} zIndexOffset={1000}>
+                <Popup>{p.description ?? "—"}</Popup>
+              </Marker>
+              <Circle
+                center={[lat, lng]}
+                radius={100}
+                pathOptions={p.type === "soldier" ? { color: "blue" } : { color: "red" }}
+              />
+            </React.Fragment>
+          );
+        })}
       </MapContainer>
     </div>
   );
