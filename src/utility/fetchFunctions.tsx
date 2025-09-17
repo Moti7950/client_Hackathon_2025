@@ -1,9 +1,8 @@
-import { NavigateFunction } from "react-router-dom";
-
+import BASE_URL from "../config";
 
 export async function checkExists(userName: string, password: string): Promise<boolean> {
   try {
-    const response = await fetch("http://localhost:6578/users/checkUser", {
+    const response = await fetch(`${BASE_URL}/users/checkUser`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userName, password }),
