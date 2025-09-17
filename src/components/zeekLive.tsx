@@ -12,6 +12,7 @@ import "leaflet/dist/leaflet.css";
 import html2canvas from "html2canvas";
 import BASE_URL from "../config";
 import { useDrone } from "../contexts/Drone.context";
+import '../styles/zeek.css';
 
 type Coordinate = [number, number];
 
@@ -131,33 +132,19 @@ const DroneMap: React.FC = () => {
   };
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }} ref={containerRef}>
-      {/* כפתור צילום */}
-      <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }}>
-        <button
+    <div style={{ height: "100vh", width: "100vw" }} ref={mapRef}>
+      {/* לחצן צילום */}
+      <div id="capture-button" >
+        <button 
           onClick={captureMap}
         >
           📸 צלם תמונה
         </button>
       </div>
 
-      {/* מיקום הרחפן + מונה מהשרת */}
-      <div
-        style={{
-          position: "absolute",
-          top: 10,
-          left: -50,
-          zIndex: 1000,
-          backgroundColor: "rgba(0,0,0,0.7)",
-          color: "white",
-          padding: "10px",
-          margin: "100px",
-          borderRadius: "5px",
-          fontFamily: "monospace",
-          minWidth: 220,
-        }}
-      >
-        <div>🚁 מיקום הרחפן</div>
+      {/* מידע על מיקום הרחפן */}
+      <div id="location-info-zeek" > 
+        <div>🚁 מיקום הרחפן:</div>
         <div>Lat: {dronePosition[0].toFixed(6)}</div>
         <div>Lng: {dronePosition[1].toFixed(6)}</div>
         <div style={{ marginTop: 6 }}>
