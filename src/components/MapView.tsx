@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
-import LocationClick from "./LocationClick";
+// import LocationClick from "./LocationClick";
 import { useLocations } from "../contexts/Locations.context.tsx";
 import BASE_URL from "../config";
 
@@ -45,7 +45,7 @@ function MapView() {
             attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
           />
         )}
-        <LocationClick onClick={() => {}} setLocations={setLocations} />
+        {/* <LocationClick onClick={() => {}} setLocations={setLocations} /> */}
         {locations.map((loc) => (
           <React.Fragment key={loc.id}>
             <Marker position={[loc.lat, loc.len]}>
