@@ -51,19 +51,6 @@ export default function Header() {
         <button onClick={TargetOfficer}>Approval from a targets officer</button>
         <button onClick={MarkSuspicious}>create sespishes arwy</button>
         <button onClick={ComparingWithAI}>Comparing suspicious terrain images with AI</button>
-
-        {/* --- הזנת נ"צ ידנית ושליחה ל-ZEEK --- */}
-        <input
-          placeholder="lat או lat,lng"
-          value={lat}
-          onChange={(e) => setLat(e.target.value)}
-        />
-        <input
-          placeholder="lng/len"
-          value={lng}
-          onChange={(e) => setLng(e.target.value)}
-        />
-        <button onClick={sendToZeek}>שלח ל-ZEEK</button>
       </header>
     </>
   );
