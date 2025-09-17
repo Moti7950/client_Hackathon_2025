@@ -42,8 +42,10 @@ export default function Header() {
 
   return (
     <>
-      <header>
-        <button onClick={toggleZeek}>
+      <header id="header">
+        <img src="/public/Aman.png" id="amanLogo" alt="" />
+        <img src="/public/logo.png" id="Logo" alt="" />
+        <button id="toggleZeek" onClick={toggleZeek}>
           {pathname.endsWith("/homePage/zeek") ? "Back to Map" : "ZEEK live"}
         </button>
 

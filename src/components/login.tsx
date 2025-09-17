@@ -33,7 +33,11 @@ export default function Login() {
   return (
     <>
       <main className="login-main">
+        <div id="logos">
         <img src="Aman.png" alt="" id="haman" />
+        <img src="logo.png" id="haman" alt="" />
+        </div>
+        <p id="login">login</p>
         <section id="sectionInput">
           <input
             type="text"
