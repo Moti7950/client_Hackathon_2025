@@ -1,5 +1,7 @@
 import { useMapEvents } from "react-leaflet";
 import * as turf from "@turf/turf";
+import BASE_URL from "../config";
+
 
 function LocationClick({
   onClick,
@@ -16,7 +18,7 @@ function LocationClick({
       const point = turf.point([lng, lat]);
       const buffered = turf.buffer(point, 100, { units: "meters" });
 
-      fetch("http://localhost:6578/locations/area", {
+      fetch(`${BASE_URL}/locations/area`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(buffered),
