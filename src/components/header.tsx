@@ -17,7 +17,7 @@ export default function Header(
         <button onClick={toggleZeek}>
         {pathname.endsWith("/homePage/zeek") ? "Back to Map" : "ZEEK live"}
         </button>
-        <button onClick={SoldierLocations}>get soldier locations</button>
+        <button >get soldier locations</button>
         <button onClick={TargetOfficer}>Approval from a targets officer</button>
         <button onClick={MarkSuspicious}>create sespishes arwy</button>
         <button onClick={ComparingWithAI}>
