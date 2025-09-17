@@ -65,7 +65,7 @@ const DroneMap: React.FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   // <<< הרחפן מוצב בנ״צ שהבאת >>>
- const { dronePosition, setDronePosition } = useDrone();
+ const { dronePosition} = useDrone();
 
 
   // נתונים שבאים מהשרת עבור הטווח של הרחפן

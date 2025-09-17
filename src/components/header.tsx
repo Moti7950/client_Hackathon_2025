@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ZeekLive, MarkSuspicious, ComparingWithAI, TargetOfficer } from "../utility/chengeFuncOnClickBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 
