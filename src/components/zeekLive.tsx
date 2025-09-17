@@ -1,49 +1,121 @@
-import React from "react";
-import { MapContainer, TileLayer, Polygon, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import * as turf from "@turf/turf";
-import { useLocations } from "../contexts/Locations.context";
+import React, { useState, useRef } from "react";
+import { MapContainer, CircleMarker, TileLayer, useMap } from "react-leaflet";
+import html2canvas from "html2canvas";
 
-const MarkedArea: [number, number][] = [
-  [31.545, 34.5165],
-  [31.545, 34.517],
-  [31.5445, 34.517],
-  [31.5445, 34.5165],
-  [31.545, 34.5165], // Closing the loop
-];
+type Coordinate = [number, number];
 
-const ZeekLive: React.FC = () => {
-    const { locations } = useLocations();
-  const polygon = turf.polygon([
-    [...MarkedArea.map(([lat, lng]) => [lng, lat])],
+const CenterMap: React.FC<{ position: Coordinate }> = ({ position }) => {
+  const map = useMap();
+  map.setView(position, 20);
+  return null;
+};
+
+const DroneMap: React.FC = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  // גבולות האזור שבו הרחפן יכול להיות
+  const areaBounds: [[number, number], [number, number]] = [
+    [31.5445, 34.5165],
+    [31.545, 34.517],
+  ];
+
+  // מיקום הרחפן
+  const [dronePosition, setDronePosition] = useState<Coordinate>([
+    (areaBounds[0][0] + areaBounds[1][0]) / 2,
+    (areaBounds[0][1] + areaBounds[1][1]) / 2,
   ]);
-  const filteredLocations = locations.filter((loc) => {
-    const point = turf.point([loc.len, loc.lat]);
-    return turf.booleanPointInPolygon(point, polygon);
-  });
+
+  // פונקציה להזזת הרחפן למיקום חדש
+  const moveDroneTo = (newPosition: Coordinate) => {
+    setDronePosition(newPosition);
+  };
+
+  // פונקציה לצילום תמונה של המפה ושליחת הנ״צ והתמונה
+  const captureMap = async () => {
+    if (mapRef.current) {
+      const canvas = await html2canvas(mapRef.current);
+      const image = canvas.toDataURL("image/png"); // תמונה כ-base64
+      handleCapture(dronePosition, image);
+    }
+  };
+
+  // פונקציה שמקבלת את הנ״צ והתמונה (אתה יכול להחליף אותה בפעולה שלך)
+  const handleCapture = (position: Coordinate, image: string) => {
+    console.log("Drone coordinates:", position);
+    console.log("Captured image:", image);
+    // כאן אפשר לשלוח את הנתונים לשרת או פונקציה אחרת
+  };
 
   return (
-    <MapContainer
-      center={[31.545, 34.5165]} 
-      zoom={20} 
-      style={{ height: '100%', width: '100%' }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
-      <Polygon
-        positions={MarkedArea}
-        pathOptions={{ color: 'red', fillOpacity: 0.4 }}
-      />
+    <div style={{ height: "100vh", width: "100vw" }} ref={mapRef}>
+      {/* לחצן צילום */}
+      <div style={{
+        position: "absolute",
+        top: "10px",
+        right: "10px",
+        zIndex: 1000,
+      }}>
+        <button
+          onClick={captureMap}
+          style={{
+            padding: "10px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          📸 צלם תמונה
+        </button>
+      </div>
 
-      {filteredLocations.map((loc) => (
-        <Marker key={loc.id} position={[loc.lat, loc.len]}>
-          <Popup>{loc.description}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+      {/* מידע על מיקום הרחפן */}
+      <div style={{
+        position: "absolute",
+        top: "10px",
+        left: "10px",
+        zIndex: 1000,
+        backgroundColor: "rgba(0,0,0,0.7)",
+        color: "white",
+        padding: "10px",
+        borderRadius: "5px",
+        fontFamily: "monospace",
+      }}>
+        <div>🚁 מיקום הרחפן:</div>
+        <div>Lat: {dronePosition[0].toFixed(6)}</div>
+        <div>Lng: {dronePosition[1].toFixed(6)}</div>
+      </div>
+
+      <MapContainer
+        center={dronePosition}
+        zoom={20}
+        scrollWheelZoom={false}
+        dragging={true}
+        style={{ height: "100%", width: "100%" }}
+        zoomControl={false}
+        attributionControl={false}
+      >
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          attribution='Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+        />
+
+        <CenterMap position={dronePosition} />
+
+        <CircleMarker
+          center={dronePosition}
+          radius={8}
+          pathOptions={{
+            color: "#ff0000",
+            fillColor: "#ff4444",
+            fillOpacity: 0.9,
+            weight: 2,
+          }}
+        />
+      </MapContainer>
+    </div>
   );
 };
 
-export default ZeekLive;
+export default DroneMap;
