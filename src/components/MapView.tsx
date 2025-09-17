@@ -4,13 +4,15 @@ import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import LocationClick from "./LocationClick";
 import type { location } from "../types/location";
+import BASE_URL from "../config";
+
 
 function MapView() {
   const [view, setView] = useState("map");
   const [locations, setLocations] = useState<location[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:6578/locations")
+    fetch(`${BASE_URL}/locations`)
       .then((res) => res.json())
       .then((data) => {
         setLocations(data);
@@ -31,7 +33,7 @@ function MapView() {
         view
       </button>
 
-      <MapContainer center={[31.4167, 34.3333]} zoom={13}>
+      <MapContainer center={[31.4167, 34.3333]} zoom={13} style={{ height: "100%", width: "100%" }}>
         {view === "map" ? (
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

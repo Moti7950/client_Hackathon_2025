@@ -1,17 +1,19 @@
-import { useNavigate } from "react-router";
 import React, { useContext } from "react";
 import "../styles/login.css";
 import { RoleContext } from "../contexts/role.context";
+import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config";
+
 
 export default function Login() {
   const role = useContext(RoleContext);
+  const navigate = useNavigate()
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  let navigate = useNavigate();
 
   const onsubmit = async () => {
     console.log(username, password);
-    const data = await fetch("http://localhost:6578/users/checkUser", {
+    const data = await fetch(`${BASE_URL}/users/checkUser`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -20,15 +22,17 @@ export default function Login() {
     role?.setRole(result.role);
     console.log(result.status);
     if (result.status) {
-      navigate("/homepage");
+      sessionStorage.setItem("isAuthed", "true");
+      navigate("/homePage")
     } else {
+      sessionStorage.removeItem("isAuthed");
       alert("Invalid credentials, please try again.");
     }
   };
 
   return (
     <>
-      <main>
+      <main className="login-main">
         <img src="Aman.png" alt="" id="haman" />
         <section id="sectionInput">
           <input
@@ -43,7 +47,9 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="enter password"
           />
-          <button id="btnLogin" onClick={onsubmit}>Log in</button>
+          <button id="btnLogin" onClick={onsubmit}>
+            Log in
+          </button>
         </section>
         <p>!סודי ביותר</p>
       </main>

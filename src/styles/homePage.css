@@ -1,12 +1,39 @@
-header{
-  background-color: aqua;
-  border-radius: 5px;
+/* בסיס לגבהים */
+html, body, #root {
+  height: 100%;
+  margin: 0;
 }
 
+/* פריסת עמוד: כותרת, תוכן, פוטר */
+.layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* header | main (גמיש) | footer */
+}
 
-footer{
-  background-color: rgb(151, 230, 252);
-  border-radius: 5px;
-  margin-top: 1vh;
-  height: 4vh;
+/* הכפתורים תמיד ייראו למעלה */
+.layout nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;           /* כדי לא לראות את המפה מתחת */
+  border-bottom: 1px solid #ddd;
+}
+
+/* אזור התוכן */
+.layout main {
+  min-height: 0;              /* חשוב כדי שהילדים יוכלו להיות height:100% */
+  overflow: hidden;           /* מונע גלילה בתוך המפה/אריחים */
+  display: grid;
+}
+
+/* כל קומפוננטה שנכנסת דרך ה-Outlet תמלא את הגובה */
+.layout main > * {
+  height: 100%;
+}
+
+/* ל-Leaflet חייב להיות גובה מפורש על הקונטיינר */
+.leaflet-container {
+  height: 100% !important;
+  width: 100%;
 }
