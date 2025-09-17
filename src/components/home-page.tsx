@@ -1,20 +1,20 @@
 import "../styles/homePage.css";
 import Footer from "./footer";
 import Header from "./header";
-import MapView from "./MapView";
-import GazaZoomMap from "./gazaStrip";
+import { Outlet } from "react-router-dom";
 
 export default function HomePage() {
   return (
     <>
-      <header>
-        <Header />
-      </header>
-      <MapView />
-      <GazaZoomMap />
-      <footer>
-        <Footer />
-      </footer>
-    </>
+        <div className="layout">
+          <nav>
+            <Header />
+          </nav>
+          <main>
+            <Outlet />
+          </main>
+          <footer><Footer /></footer>
+        </div>
+      </>
   );
 }
