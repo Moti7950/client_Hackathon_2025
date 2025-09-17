@@ -6,15 +6,17 @@ import { Outlet } from "react-router-dom";
 export default function HomePage() {
   return (
     <>
-        <div className="layout">
-          <nav>
-            <Header />
-          </nav>
-          <main>
+      <div className="layout">
+        <nav>
+          <Header />
+        </nav>
+        <main>
             <Outlet />
-          </main>
-          <footer><Footer /></footer>
-        </div>
-      </>
+        </main>
+        <footer>
+          <Footer />
+        </footer>
+      </div>
+    </>
   );
 }
