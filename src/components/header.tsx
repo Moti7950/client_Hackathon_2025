@@ -1,4 +1,4 @@
-import {ZeekLive ,MarkSuspicious , ComparingWithAI , SoldierLocations, TargetOfficer} from "../utility/chengeFuncOnClickBtn";
+import {ZeekLive ,MarkSuspicious , ComparingWithAI , TargetOfficer} from "../utility/chengeFuncOnClickBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Header(

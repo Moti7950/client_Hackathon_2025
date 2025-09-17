@@ -1,38 +1,32 @@
-/* בסיס לגבהים */
 html, body, #root {
   height: 100%;
   margin: 0;
 }
 
-/* פריסת עמוד: כותרת, תוכן, פוטר */
 .layout {
   min-height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto; /* header | main (גמיש) | footer */
+  grid-template-rows: auto 1fr auto;
 }
 
-/* הכפתורים תמיד ייראו למעלה */
 .layout nav {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: #fff;           /* כדי לא לראות את המפה מתחת */
+  background: #fff;          
   border-bottom: 1px solid #ddd;
 }
 
-/* אזור התוכן */
 .layout main {
-  min-height: 0;              /* חשוב כדי שהילדים יוכלו להיות height:100% */
-  overflow: hidden;           /* מונע גלילה בתוך המפה/אריחים */
+  min-height: 0;             
+  overflow: hidden;           
   display: grid;
 }
 
-/* כל קומפוננטה שנכנסת דרך ה-Outlet תמלא את הגובה */
 .layout main > * {
   height: 100%;
 }
 
-/* ל-Leaflet חייב להיות גובה מפורש על הקונטיינר */
 .leaflet-container {
   height: 100% !important;
   width: 100%;
