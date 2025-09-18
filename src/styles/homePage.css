@@ -26,6 +26,7 @@ body,
 }
 #amanLogo {
   margin-top: 0.5%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18); /* הוספת צל */
 
   height: 90px; /* גובה אחיד */
   width: 90px; /* רוחב אחיד */
@@ -39,6 +40,8 @@ body,
 }
 
 #Logo {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); /* הוספת צל */
+
   order: 1;
   margin-top: 0.5%;
   height: 90px; /* גובה אחיד */

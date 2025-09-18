@@ -1,12 +1,9 @@
 #root {
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: "David Libre", "Rubik", Arial, sans-serif;
   align-items: center;
   height: 98vh;
-} 
-
-
-
-
+}
