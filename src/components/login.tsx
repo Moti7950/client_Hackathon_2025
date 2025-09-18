@@ -21,6 +21,7 @@ export default function Login() {
     const result = await data.json();
     role?.setRole(result.role);
     console.log(result.status);
+    console.log(BASE_URL);
     if (result.status) {
       sessionStorage.setItem("isAuthed", "true");
       navigate("/homePage")

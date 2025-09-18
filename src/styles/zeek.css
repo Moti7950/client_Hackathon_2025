@@ -1,0 +1,141 @@
+/* מעטפת כללית למסך ה־ZEEK */
+.zeek-root {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: #0b1a1f;              /* רקע לילה */
+  color: #e6f1f0;
+  font-family: "Heebo", "Rubik", system-ui, sans-serif;
+}
+
+/* המפה עצמה תתפוס 100% מהמעטפת */
+.zeek-map {
+  height: 100%;
+  width: 100%;
+}
+
+.zeek-captureBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5000; /* העליתי כדי שיתגבר על המפה */
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1F7A6B, #255E55);
+  color: #fff;              /* לוודא טקסט לבן */
+  font-weight: 600;         /* שיראה בולט */
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  cursor: pointer;
+  user-select: none;
+  transition: transform .08s ease, box-shadow .12s ease;
+}
+
+.zeek-captureBtn:hover { transform: translateY(-1px); }
+.zeek-captureBtn:active { transform: translateY(0); }
+
+/* לוח מידע “HUD” – קבוע משמאל למעלה */
+.zeek-hud {
+  position: absolute;
+  top: 10px;
+  left: -50px;           /* בדיוק כמו שהיה לך inline */
+  margin: 100px;         /* בדיוק כמו שהיה inline */
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.70);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;    /* בדיוק כמו שהיה inline */
+  font-family: monospace;/* בדיוק כמו שהיה inline */
+  min-width: 220px;
+}
+.zeek-hud__row { margin-top: 6px; }
+
+
+/* תצוגה מקדימה של צילום */
+.zeek-preview{
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 6000;                 /* מעל המפה וה־HUD */
+  background: rgba(0,0,0,.8);
+  border: 1px solid #163039;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  padding: 8px;
+  max-width: 260px;
+  cursor: zoom-out;              /* אינדיקציה שלחיצה תסגור */
+}
+.zeek-preview__head{
+  font-size: .85rem;
+  color: #e6f1f0;
+  margin-bottom: 6px;
+  opacity: .85;
+}
+.zeek-preview img{
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* מיכל שמצולם – עוטף את ה-MapContainer */
+.zeek-mapWrap{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+/* מצב צילום “נקי”: מציג רק אריחי מפה (tile-pane) */
+.capture-clean .zeek-hud,
+.capture-clean .zeek-captureBtn,
+.capture-clean .zeek-preview {
+  display: none !important; /* אל תכלול HUD, כפתורים ותצוגה מקדימה */
+}
+
+/* החבאת שכבות עליונות של Leaflet בזמן צילום */
+.capture-clean .leaflet-control-container,
+.capture-clean .leaflet-overlay-pane,  /* פוליגונים/מעגלים/ווקטור */
+.capture-clean .leaflet-marker-pane,   /* אייקוני מרקר */
+.capture-clean .leaflet-shadow-pane,
+.capture-clean .leaflet-tooltip-pane,
+.capture-clean .leaflet-popup-pane {
+  display: none !important;
+}
+
+/* ========== תצוגה מקדימה ========== */
+.nocapture{} /* סמן לעקיפה ב-html2canvas */
+
+/* תצוגה מקדימה – גדולה יותר, תמיד מעל הכל, יושבת מעל הפוטר */
+.zeek-preview{
+  position: fixed;           /* במקום absolute */
+  bottom: 88px;              /* הרם קצת מעל הפוטר */
+  right: 16px;
+  z-index: 10000;            /* ודא שמעל המפה/פופאפים */
+  background: rgba(0,0,0,.85);
+  border: 1px solid #163039;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.45);
+  padding: 10px;
+  max-width: 380px;          /* הגדלה משמעותית */
+  max-height: 220px;
+  overflow: hidden;
+  cursor: zoom-in;           /* רמז שאפשר להגדיל (אם תרצה בהמשך) */
+}
+
+.zeek-preview__head{
+  font-size: .92rem;
+  color: #e6f1f0;
+  margin-bottom: 8px;
+  opacity: .9;
+  white-space: nowrap;
+}
+
+.zeek-preview img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* ממלא יפה את המסגרת */
+  border-radius: 8px;
+}
