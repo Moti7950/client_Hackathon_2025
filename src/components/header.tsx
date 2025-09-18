@@ -17,10 +17,12 @@ export default function Header() {
   const triggerSendAI = () => window.dispatchEvent(new Event("send-ai"));
 
   return (
-    <header>
-      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        <button onClick={toggleZeek}>
-          {isZeek ? "Back to Map" : "ZEEK live"}
+    <>
+      <header id="header">
+        <img src="/public/Aman.png" id="amanLogo" alt="" />
+        <img src="/public/logo.png" id="Logo" alt="" />
+        <button id="toggleZeek" onClick={toggleZeek}>
+          {pathname.endsWith("/homePage/zeek") ? "Back to Map" : "ZEEK live"}
         </button>
         {isZeek && (
           <>
