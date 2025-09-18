@@ -134,7 +134,7 @@ const DroneMap: React.FC = () => {
     <div style={{ height: "100vh", width: "100vw" }} ref={containerRef}>
       {/* כפתור צילום */}
       <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }}>
-        <button
+        <button style={{marginTop:"100%",marginRight:"20px" ,backgroundColor:"#31c5f2"}}
           onClick={captureMap}
         >
           📸 צלם תמונה
@@ -155,6 +155,7 @@ const DroneMap: React.FC = () => {
           borderRadius: "5px",
           fontFamily: "monospace",
           minWidth: 220,
+          marginTop:"9rem"
         }}
       >
         <div>🚁 מיקום הרחפן</div>
@@ -198,7 +199,7 @@ const DroneMap: React.FC = () => {
         <Circle
           center={dronePosition}
           radius={NEARBY_RADIUS_M}
-          pathOptions={{ color: "#2196F3", weight: 1, fillOpacity: 0.08 }}
+          pathOptions={{ color: "#3b6e98ff", weight: 1, fillOpacity: 0.4 }}
         />
 
         {/* מציגים רק את מה שהשרת החזיר עבור הטווח */}
