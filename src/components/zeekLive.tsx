@@ -132,19 +132,33 @@ const DroneMap: React.FC = () => {
   };
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }} ref={mapRef}>
-      {/* לחצן צילום */}
-      <div id="capture-button" >
-        <button 
+    <div style={{ height: "100vh", width: "100vw" }} ref={containerRef}>
+      {/* כפתור צילום */}
+      <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }}>
+        <button style={{marginTop:"100%",marginRight:"20px" ,backgroundColor:"#31c5f2"}}
           onClick={captureMap}
         >
           📸 צלם תמונה
         </button>
       </div>
 
-      {/* מידע על מיקום הרחפן */}
-      <div id="location-info-zeek" > 
-        <div>🚁 מיקום הרחפן:</div>
+      {/* מיקום הרחפן + מונה מהשרת */}
+      <div
+        style={{
+          position: "absolute",
+          top: 10,
+          left: -50,
+          zIndex: 1000,
+          backgroundColor: "rgba(0,0,0,0.7)",
+          color: "white",
+          padding: "10px",
+          margin: "100px",
+          borderRadius: "5px",
+          fontFamily: "monospace",
+          minWidth: 220,
+        }}
+      >
+        <div>🚁 מיקום הרחפן</div>
         <div>Lat: {dronePosition[0].toFixed(6)}</div>
         <div>Lng: {dronePosition[1].toFixed(6)}</div>
         <div style={{ marginTop: 6 }}>
@@ -185,7 +199,7 @@ const DroneMap: React.FC = () => {
         <Circle
           center={dronePosition}
           radius={NEARBY_RADIUS_M}
-          pathOptions={{ color: "#2196F3", weight: 1, fillOpacity: 0.08 }}
+          pathOptions={{ color: "#3b6e98ff", weight: 1, fillOpacity: 0.4 }}
         />
 
         {/* מציגים רק את מה שהשרת החזיר עבור הטווח */}

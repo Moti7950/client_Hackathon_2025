@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 header {
   display: flex;
   flex-direction: row;
@@ -51,6 +52,11 @@ header button:hover {
 }
 
 html, body, #root {
+=======
+html,
+body,
+#root {
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
   height: 100%;
   margin: 0;
   box-sizing: border-box;
@@ -67,10 +73,15 @@ html, body, #root {
   position: sticky;
   top: 0;
   z-index: 1000;
+<<<<<<< HEAD
   background: #fff;
   border-bottom: 1px solid #ddd;
   width: 100vw;
   box-sizing: border-box;
+=======
+  background: #1e1e1e;
+  border-bottom: 1px solid #dddddd;
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
 }
 
 .layout main {
@@ -80,7 +91,11 @@ html, body, #root {
   width: 100vw;
   box-sizing: border-box;
 }
+#amanLogo {
+  margin-top: 0.5%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18); /* הוספת צל */
 
+<<<<<<< HEAD
 .layout main > * {
   height: 100%;
   width: 100%;
@@ -120,4 +135,46 @@ html, body, #root {
   .leaflet-container {
     min-height: 200px;
   }
+=======
+  height: 90px; /* גובה אחיד */
+  width: 90px; /* רוחב אחיד */
+  border-radius: 50%; /* עיגול מלא */
+  object-fit: cover; /* שמירה על יחס תמונה */
+  border: 4px solid #023603; /* מסגרת ירוקה */
+  margin-left: 20px; /* מרווח משמאל */
+  margin-right: 0; /* אין מרווח מימין */
+  float: left; /* מיקום לשמאל */
+  display: block;
+}
+
+#Logo {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); /* הוספת צל */
+
+  order: 1;
+  margin-top: 0.5%;
+  height: 90px; /* גובה אחיד */
+  width: 90px; /* רוחב אחיד */
+  border-radius: 50%; /* עיגול מלא */
+  object-fit: cover; /* שמירה על יחס תמונה */
+  border: 4px solid #023603; /* מסגרת ירוקה */
+  margin-right: 20px; /* מרווח מימין */
+  margin-left: 0; /* אין מרווח משמאל */
+  float: right; /* מיקום לימין */
+  display: block;
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
+}
+
+
+#wiewBtn{
+  margin-top: 10%;
+  margin-left: 20%;
+  max-height: min-content;
+
+
+}
+#selectBtn{
+  margin-top: 1.5%;
+    margin-left: 100%;
+    color: #023603;
+
 }

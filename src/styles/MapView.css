@@ -1,11 +1,16 @@
 
 .leaflet-container {
   height: 90vh;
+<<<<<<< HEAD
   width: 100vw;
   margin-top: 2vh;
   min-height: 300px;
   max-width: 100vw;
   box-sizing: border-box;
+=======
+  width: 100%;
+  margin-top: 3vh
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
 }
 
 .leaflet-container {

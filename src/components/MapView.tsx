@@ -52,7 +52,7 @@ function MapView() {
   return (
     <>
       <div style={{ position: "absolute", zIndex: 1000, padding: "10px" }}>
-        <button
+        <button id="wiewBtn"
           onClick={() => {
             view === "map" ? setView("satellite") : setView("map");
           }}
@@ -61,11 +61,14 @@ function MapView() {
         </button>
 
         <button
+        
+        id="selectBtn"
           onClick={() => {
+            
             setDrawing(!drawing);
             setSquareCenter(null);
           }}
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "50px" }}
         >
           {drawing ? "Cancel Selection" : "Select Point"}
         </button>
