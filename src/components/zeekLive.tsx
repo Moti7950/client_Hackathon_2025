@@ -6,6 +6,7 @@ import {
   Marker,
   Popup,
   Circle,
+  Polyline,
   CircleMarker,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -233,18 +234,35 @@ const DroneMap: React.FC = () => {
 
           {/* מרכז מפה לרחפן */}
           <CenterMap position={dronePosition} />
-
-          {/* הרחפן (אדום) */}
-          <CircleMarker
-            center={dronePosition}
-            radius={8}
-            pathOptions={{
-              color: "#ff0000",
-              fillColor: "#ff4444",
-              fillOpacity: 0.9,
-              weight: 2,
-            }}
-          />
+          {/* הרחפן (אדום) כצלב */}
+          {(() => {
+            const [lat, lng] = dronePosition;
+            const sizeM = 40; // אורך חצי-קו במטרים (סה״כ ~80m מקצה לקצה)
+            const latRad = (lat * Math.PI) / 180;
+            const dLat = sizeM / 111_320;
+            const dLng = sizeM / (111_320 * Math.max(Math.cos(latRad), 1e-6));
+            const lineStyle = { color: "#ff0000", weight: 2 };
+            return (
+              <>
+                {/* קו אנכי */}
+                <Polyline
+                  positions={[
+                    [lat - dLat, lng],
+                    [lat + dLat, lng],
+                  ]}
+                  pathOptions={lineStyle}
+                />
+                {/* קו אופקי */}
+                <Polyline
+                  positions={[
+                    [lat, lng - dLng],
+                    [lat, lng + dLng],
+                  ]}
+                  pathOptions={lineStyle}
+                />
+              </>
+            );
+          })()}
 
           {/* טבעת טווח הרחפן */}
           <Circle
