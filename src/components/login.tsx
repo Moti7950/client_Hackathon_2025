@@ -52,9 +52,11 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="enter password"
           />
-          <button id="btnLogin" onClick={onsubmit}>
-            Log in
-          </button>
+          <div className="button-row">
+            <button id="btnLogin" onClick={onsubmit}>
+              Log in
+            </button>
+          </div>
         </section>
         <p>!סודי ביותר</p>
       </main>
