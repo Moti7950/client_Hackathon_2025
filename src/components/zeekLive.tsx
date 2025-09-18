@@ -268,7 +268,7 @@ const DroneMap: React.FC = () => {
           <Circle
             center={dronePosition}
             radius={NEARBY_RADIUS_M}
-            pathOptions={{ color: "#2196F3", weight: 1, fillOpacity: 0.08 }}
+            pathOptions={{ color: "#2196F3", weight: 1, fillOpacity: 0.3 }}
           />
 
           {/* נקודות מהשרת – CircleMarker (תמיד נראה) + Marker עם Popup */}
