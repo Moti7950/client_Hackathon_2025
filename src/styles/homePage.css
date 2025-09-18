@@ -1,33 +1,141 @@
+<<<<<<< HEAD
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0 10px 0;
+  background: #fff;
+  flex-wrap: wrap;
+}
+header button {
+  font-size: 1em;
+  padding: 0.5em 1.2em;
+  border-radius: 8px;
+  border: 1.5px solid #b0b4b9;
+  background: #e4e3e3;
+  color: #23272b;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin: 0;
+}
+header button:hover {
+  background: #d1d1d1;
+  border-color: #646cff;
+}
+@media (max-width: 900px) {
+  header {
+    gap: 10px;
+    padding: 12px 0 8px 0;
+    flex-wrap: wrap;
+  }
+  header button {
+    font-size: 0.95em;
+    padding: 0.4em 1em;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 6px 0;
+  }
+  header button {
+    width: 90vw;
+    max-width: 350px;
+    font-size: 0.95em;
+    padding: 0.4em 0.7em;
+  }
+}
+
+html, body, #root {
+=======
 html,
 body,
 #root {
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
   height: 100%;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .layout {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
 }
 
 .layout nav {
   position: sticky;
   top: 0;
   z-index: 1000;
+<<<<<<< HEAD
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  width: 100vw;
+  box-sizing: border-box;
+=======
   background: #1e1e1e;
   border-bottom: 1px solid #dddddd;
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
 }
 
 .layout main {
   min-height: 0;
   overflow: hidden;
   display: grid;
+  width: 100vw;
+  box-sizing: border-box;
 }
 #amanLogo {
   margin-top: 0.5%;
   box-shadow: 0 4px 16px rgba(0,0,0,0.18); /* הוספת צל */
 
+<<<<<<< HEAD
+.layout main > * {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-container {
+  height: 100% !important;
+  width: 100vw;
+  min-height: 300px;
+  max-width: 100vw;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+  }
+  .layout nav, .layout main, .leaflet-container {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+  }
+  .layout nav, .layout main, .leaflet-container {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .leaflet-container {
+    min-height: 200px;
+  }
+=======
   height: 90px; /* גובה אחיד */
   width: 90px; /* רוחב אחיד */
   border-radius: 50%; /* עיגול מלא */
@@ -53,6 +161,7 @@ body,
   margin-left: 0; /* אין מרווח משמאל */
   float: right; /* מיקום לימין */
   display: block;
+>>>>>>> e1c31dee6a0891770bbb52153fc59542b012f03d
 }
 
 
