@@ -19,10 +19,10 @@ export default function Header() {
   return (
     <>
       <header id="header">
-        <img src="/public/Aman.png" id="amanLogo" alt="" />
-        <img src="/public/logo.png" id="Logo" alt="" />
+        <img src="/Aman.png" id="amanLogo" alt="" />
+        <img src="/logo.png" id="Logo" alt="" />
         <button id="toggleZeek" onClick={toggleZeek}>
-          {pathname.endsWith("/homePage/zeek") ? "Back to Map" : "ZEEK live"}
+          {isZeek ? "Back to Map" : "ZEEK live"}
         </button>
         {isZeek && (
           <>
@@ -30,7 +30,7 @@ export default function Header() {
             <button onClick={triggerSendAI}>🤖 שלח ל-AI</button>
           </>
         )}
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
