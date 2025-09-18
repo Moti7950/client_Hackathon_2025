@@ -1,16 +1,12 @@
 [build]
-  # אם הקוד של ה-frontend בתיקיית client:
-  base = "client"
+  base = "."
   publish = "dist"
   command = "npm ci && npm run build"
 
 [build.environment]
-  # Node עדכני
   NODE_VERSION = "22"
-  # עקיפת הבאג של npm עם Rollup native
   ROLLUP_SKIP_NODEJS_NATIVE = "true"
 
-# כותרות אבטחה שימושיות
 [[headers]]
   for = "/*"
   [headers.values]
@@ -19,13 +15,11 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# קאש חזק לנכסי סטטיים
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"

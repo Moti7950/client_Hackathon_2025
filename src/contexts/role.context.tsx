@@ -21,5 +21,4 @@ function RoleProvider({ children }: PropsWithChildren) {
     </RoleContext.Provider>
   );
 }
-
 export default RoleProvider;
